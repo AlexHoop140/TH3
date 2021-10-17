@@ -1,183 +1,135 @@
-// =================================== STACK - NGĂN XẾP =================================== 
-// Stack là 1 cấu trúc trừu tượng, các đối tượng trong stack phải làm việc theo 1 cơ chế
-// LIFO(LAST IN FIRST OUT) - đối tượng nào vào sau thì sẽ ra trước
-
-// IsEmpty: kiểm tra xem stack có rỗng hay không
-// Push: thêm 1 đối tượng vào đầu stack <=> theo cơ chế LIFO
-// Pop: lấy phần tử đầu stack và trả về giá trị của đối tượng đầu stack
-// đồng thời phải hủy nó đi
-// Top: xem thông tin của phần tử đầu stack và không hủy nó đi
-
-// ===================== CODE ===================== 
 #include<iostream>
 using namespace std;
 
-/*
-Nhập danh sách stack chứa các số nguyên, sau đó xuất ra màn hình các giá trị số nguyên đó
+typedef int elementType;
 
-*/
-
-// khai báo cấu trúc của 1 cái node trong stack
 struct node
 {
-	int data; // stack đang chứa các số nguyên
-	struct node *pNext; // con trỏ liên kết giữa các node với nhau
+	elementType data;
+	node *pNext; 
 };
-typedef struct node NODE;
+typedef node NODE;
 
-// khai báo cấu trúc của stack
 struct stack
 {
-	NODE *pTop; // dùng con trỏ đầu để quản lí stack
+	NODE *pTop;
 };
-typedef struct stack STACK;
+typedef stack STACK;
 
 // hàm khởi tạo stack
-void KhoiTaoStack(STACK &s)
+void initStack(STACK &s)
 {
 	s.pTop = NULL;
 }
 
 // hàm khởi tạo 1 cái node
-NODE *KhoiTaoNode(int x)
+NODE *getNode(int x)
 {
 	NODE *p = new NODE();
 	if (p == NULL)
 	{
-		cout << "\nKhong du bo nho de cap phat !!!";
 		return NULL;
 	}
-	p->data = x; // thêm giá trị của biến x vào trong data của cái node
+	p->data = x;
 	p->pNext = NULL;
 	return p;
 }
 
-// =============== KIỂM TRA STACK CÓ RỖNG HAY KHÔNG ===============
-bool IsEmpty(STACK s)
-{
-	// nếu danh sách rỗng
-	if (s.pTop == NULL)
+bool isEmpty(STACK s){
+  if (s.pTop == NULL)
 	{
 		return true;
 	}
-	return false;// danh sách có phần tử
+	return false;
 }
 
-// =============== THÊM 1 PHẦN TỬ VÀO ĐẦU STACK- LIFO ===============
-bool Push(STACK &s, NODE *p)
+void push(STACK &s, NODE *p)
 {
 	if (p == NULL)
 	{
-		return false;
+    cout << "[WARNING] Stack is empty." << endl;
+		return;
 	}
 
-	// nếu danh sách rỗng
-	if (IsEmpty(s) == true)
-	{
-		s.pTop = p; // node p chính là node đầu stack
+	if (isEmpty(s) == true){
+		s.pTop = p; 
 	}
-	else // danh sách đã có phần tử
-	{
-		p->pNext = s.pTop; // cho con trỏ của node p trỏ đến node đầu danh sách <=> tạo kiên kết
-		s.pTop = p; // cập nhật lại node đầu
+	else {
+		p->pNext = s.pTop; 
+		s.pTop = p; 
 	}
-	return true;
 }
 
-// =============== LẤY PHẦN TỬ ĐẦU STACK VÀ HỦY NÓ ĐI - LIFO ===============
-bool Pop(STACK &s, int &x) // x chính là giá trị cần lấy trong node
-{
-	// nếu danh sách rỗng
-	if (IsEmpty(s) == true)
-	{
-		return false;
+void pop(STACK &s) {
+  if (isEmpty(s) == true){
+		cout << "[WARNING] Stack is empty." << endl;
+		return;
 	}
 	else
 	{
-		NODE *p = s.pTop; // node p chính là node thế mạng để tí nữa chúng ta xóa nó đi
-		x = p->data; // gán giá trị của node đầu stack vào biến x	
-		s.pTop = s.pTop->pNext; // cập nhật node đầu stack là node tiếp theo	
-		delete p; // xóa node đầu stack vừa lấy 
-		
+		NODE *p = s.pTop; 
+		s.pTop = s.pTop->pNext; 
+		delete p; 
 	}
-	return true;// lấy phần tử đầu stack thành công
 }
 
-
-// =============== XEM THÔNG TIN CỦA PHẦN TỬ ĐẦU STACK - KHÔNG CÓ HỦY NÓ ĐI NHÉ ===============
-bool Top(STACK &s, int &x) // x chính là giá trị cần lấy ra để xem
+elementType top(STACK &s) 
 {
-	if (IsEmpty(s) == true)
+  elementType x;
+	if (isEmpty(s) == true)
 	{
-		return false;
+    cout << "[WARNING] Stack is empty." << endl;
+		return x;
 	}
-	x = s.pTop->data; // lấy giá trị của phần tử đầu stack ra để xem
-	return true;
+	x = s.pTop->data; 
+	return x;
 }
 
-// hàm xuất danh sách stack
-void XuatStack(STACK s)
+void printStack(STACK s)
 {
-	while (IsEmpty(s) == false)
+	while (isEmpty(s) == false)
 	{
-		int x;
-		Pop(s, x);
+    elementType x = top(s);
 		cout << x << " ";
-	}
-
-	if (IsEmpty(s) == true)
-	{
-		cout << "\nDANH SACH DANG RONG KIA";
-	}
-	else
-	{
-		cout << "\nDANH SACH DANG TON TAI PHAN TU";
+    pop(s);
 	}
 }
 
-// hàm nhập danh sách các số nguyên trong stack
-void NhapStack(STACK &s)
+void inputStack(STACK &s)
 {
-	int luachon;
+	int choice;
 	while (true)
 	{
-		system("cls");
 		cout << "\n\n\t\t ============== Menu ==============";
-		cout << "\n\t1. Them phan tu vao stack - Push";
-		cout << "\n\t2. Xuat danh sach stack ra man hinh - Pop";
-		cout << "\n\t3. Xem thong tin phan tu dau stack - Top";
-		cout << "\n\t0. Ket thuc";
+		cout << "\n\t1. Insert one element to stack - Push";
+		cout << "\n\t2. Print all elements in stack - Print";
+		cout << "\n\t3. Show data of the top element in stack - Top";
+		cout << "\n\t0. Quit";
 		cout << "\n\n\t\t ============== End ==============";
 
-		cout << "\nNhap lua chon: ";
-		cin >> luachon;
-		if (luachon == 1)
-		{
-			int x;
-			cout << "\nNhap phan tu can them: ";
+		cout << "\nEnter your choice: ";
+		cin >> choice;
+		// cin.ignore();
+		if (choice == 1){
+			elementType x;
+			cout << "\nType in one element to push: ";
 			cin >> x;
-			NODE *p = KhoiTaoNode(x);
-			Push(s, p);
+			// getline(cin, x, '\n');
+			NODE *p = getNode(x);
+			push(s, p);
 		}
-		else if (luachon == 2)
-		{
-			XuatStack(s);
-			system("pause");
+		else if (choice == 2){
+			printStack(s);
 		}
-		else if (luachon == 3)
-		{
-			int x;
-			Top(s, x);
-			cout << "\nPhan tu dau stack la: " << x;
-			system("pause");
+		else if (choice == 3){
+			cout << endl <<"Data of the top of stack: " << top(s);
 		}
-		else
-		{
+		else{
 			break;
 		}
 	}
 }
-
+/*
 int main()
 {
 	STACK s;
@@ -186,4 +138,4 @@ int main()
 	NhapStack(s);
 
 	return 0;
-}
+}*/
