@@ -1,9 +1,14 @@
-#include<iostream>
+#include <iostream>
+#include <sstream>
+#include <string>
 using namespace std;
+
+
+typedef string elementType; 
 
 struct node
 {
-	int data; 
+	elementType data; 
 	struct node *pNext; 
 };
 typedef node NODE;
@@ -15,7 +20,6 @@ struct queue
 };
 typedef queue QUEUE;
 
-typedef int elementType; 
 
 // ham khoi tao queue
 void initQueue(QUEUE &q)
@@ -47,6 +51,7 @@ bool isEmpty(QUEUE q)
 	return false;
 }
 
+//Ham push 1 phan tu moi vao queue
 void push(QUEUE &q, NODE *p)
 {
 	if (p == NULL){
@@ -62,30 +67,27 @@ void push(QUEUE &q, NODE *p)
 	}
 }
 
-int pop(QUEUE &q)
+//Ham bo 1 phan tu ra khoi queue
+void pop(QUEUE &q)
 {
-  int x = -9999;
 	if (isEmpty(q) == true)
 	{
     cout << "[WARNING] Empty queue." << endl;
-		return x;
+    return;
 	}
 	else
 	{
 		NODE *p = q.pHead;
-		x = p->data; 	
 		q.pHead = q.pHead->pNext;	
 		delete p;  
 
 	}
-
-  return x;
 }
 
-
-int top(QUEUE &q) 
+//Ham thong tin cua phan tu dau tien
+elementType top(QUEUE &q) 
 {
-  int x = -9999;
+  elementType x;
 	if (isEmpty(q) == true)
 	{
     cout << "[WARNING] Empty queue." << endl;
@@ -95,45 +97,47 @@ int top(QUEUE &q)
 	return x;
 }
 
-
-void deQueue(QUEUE q)
+void printQueue(QUEUE q)
 {
 	while (isEmpty(q) == false)
 	{
-		int x;
-		cout << pop(q) << " ";
+		elementType x = top(q);
+		cout << x << " ";
+    pop(q);
 	}
 }
 
-void NhapQueue(QUEUE &q)
+void inputQueue(QUEUE &q)
 {
-	int luachon;
+	int choice;
 	while (true)
 	{
 		cout << "\n\n\t\t ============== Menu ==============";
-		cout << "\n\t1. Them phan tu vao queue - Push";
-		cout << "\n\t2. Xuat danh sach queue ra man hinh - Pop";
-		cout << "\n\t3. Xem thong tin phan tu dau queue - Top";
-		cout << "\n\t0. Ket thuc";
+		cout << "\n\t1. Insert one element to queue - Push";
+		cout << "\n\t2. Print all elements in queue - Pop";
+		cout << "\n\t3. Show data of the top element in queue - Top";
+		cout << "\n\t0. Quit";
 		cout << "\n\n\t\t ============== End ==============";
 
-		cout << "\nNhap lua chon: ";
-		cin >> luachon;
-		if (luachon == 1)
+		cout << "\nEnter your choice: ";
+		cin >> choice;
+    cin.ignore();
+		if (choice == 1)
 		{
-			int x;
-			cout << "\nNhap phan tu can them: ";
-			cin >> x;
+			elementType x;
+			cout << "\nType in one element to push: ";
+			// cin >> x;
+      getline(cin, x, '\n');
 			NODE *p = getNode(x);
 			push(q, p);
 		}
-		else if (luachon == 2)
+		else if (choice == 2)
 		{
-			deQueue(q);
+			printQueue(q);
 		}
-		else if (luachon == 3)
+		else if (choice == 3)
 		{
-			cout << endl <<"Phan tu dau queue la: " << top(q);
+			cout << endl <<"Data of the top of queue: " << top(q);
 		}
 		else
 		{
@@ -147,7 +151,7 @@ int main()
 	QUEUE q;
 	initQueue(q);
 
-	NhapQueue(q);
+	inputQueue(q);
 
 	return 0;
 }
