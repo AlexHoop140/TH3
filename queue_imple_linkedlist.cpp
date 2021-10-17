@@ -6,7 +6,7 @@ struct node
 	int data; 
 	struct node *pNext; 
 };
-typedef struct node NODE;
+typedef node NODE;
 
 struct queue
 {
@@ -18,14 +18,15 @@ typedef queue QUEUE;
 typedef int elementType; 
 
 // ham khoi tao queue
-void KhoiTaoQueue(QUEUE &q)
+void initQueue(QUEUE &q)
 {
+  q.pHead = new NODE();
 	q.pHead = NULL;
 	q.pTail = NULL;
 }
 
 // ham tao node
-NODE *KhoiTaoNode(elementType x)
+NODE *getNode(elementType x)
 {
 	NODE *p = new NODE();
 	if (p == NULL)
@@ -46,30 +47,28 @@ bool isEmpty(QUEUE q)
 	return false;
 }
 
-bool Push(QUEUE &q, NODE *p)
+void push(QUEUE &q, NODE *p)
 {
-	if (p == NULL)
-	{
-		return false;
+	if (p == NULL){
+		return;
 	}
 
-	if (isEmpty(q) == true)
-	{
+	if (isEmpty(q) == true){
 		q.pHead = q.pTail = p; 
 	}
-	else 
-	{
+	else{
 		q.pTail->pNext = p; 
 		q.pTail = p; 
 	}
-	return true;
 }
 
-bool Pop(QUEUE &q, int &x)
+int pop(QUEUE &q)
 {
+  int x = -9999;
 	if (isEmpty(q) == true)
 	{
-		return false;
+    cout << "[WARNING] Empty queue." << endl;
+		return x;
 	}
 	else
 	{
@@ -79,37 +78,30 @@ bool Pop(QUEUE &q, int &x)
 		delete p;  
 
 	}
-	return true;
+
+  return x;
 }
 
 
-bool Top(QUEUE &q, int &x) 
+int top(QUEUE &q) 
 {
+  int x = -9999;
 	if (isEmpty(q) == true)
 	{
-		return false;
+    cout << "[WARNING] Empty queue." << endl;
+		return x;
 	}
 	x = q.pHead->data; 
-	return true;
+	return x;
 }
 
 
-void XuatQueue(QUEUE q)
+void deQueue(QUEUE q)
 {
 	while (isEmpty(q) == false)
 	{
 		int x;
-		Pop(q, x);
-		cout << x << " ";
-	}
-
-	if (isEmpty(q) == true)
-	{
-		cout << "\nDANH SACH DANG RONG KIA";
-	}
-	else
-	{
-		cout << "\nDANH SACH DANG TON TAI PHAN TU";
+		cout << pop(q) << " ";
 	}
 }
 
@@ -118,7 +110,6 @@ void NhapQueue(QUEUE &q)
 	int luachon;
 	while (true)
 	{
-		system("cls");
 		cout << "\n\n\t\t ============== Menu ==============";
 		cout << "\n\t1. Them phan tu vao queue - Push";
 		cout << "\n\t2. Xuat danh sach queue ra man hinh - Pop";
@@ -133,20 +124,16 @@ void NhapQueue(QUEUE &q)
 			int x;
 			cout << "\nNhap phan tu can them: ";
 			cin >> x;
-			NODE *p = KhoiTaoNode(x);
-			Push(q, p);
+			NODE *p = getNode(x);
+			push(q, p);
 		}
 		else if (luachon == 2)
 		{
-			XuatQueue(q);
-			system("pause");
+			deQueue(q);
 		}
 		else if (luachon == 3)
 		{
-			int x;
-			Top(q, x);
-			cout << "\nPhan tu dau queue la: " << x;
-			system("pause");
+			cout << endl <<"Phan tu dau queue la: " << top(q);
 		}
 		else
 		{
@@ -158,10 +145,9 @@ void NhapQueue(QUEUE &q)
 int main()
 {
 	QUEUE q;
-	KhoiTaoQueue(q);
+	initQueue(q);
 
 	NhapQueue(q);
 
-	system("pause");
 	return 0;
 }
