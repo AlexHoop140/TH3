@@ -96,12 +96,13 @@ elementType top(QUEUE &q) {
 	return x;
 }
 
+//Ham in tat ca phan tu trong queue
 void printQueue(QUEUE q)
 {
 	while (isEmpty(q) == false)
 	{
 		elementType x = top(q);
-		cout << x << " ";
+		cout << "Element in queue: " << x << endl;
 		pop(q);
 	}
 }
