@@ -24,7 +24,7 @@ typedef queue QUEUE;
 // ham khoi tao queue
 void initQueue(QUEUE &q)
 {
-  q.pHead = new NODE();
+	q.pHead = new NODE();
 	q.pHead = NULL;
 	q.pTail = NULL;
 }
@@ -72,8 +72,8 @@ void pop(QUEUE &q)
 {
 	if (isEmpty(q) == true)
 	{
-    cout << "[WARNING] Empty queue." << endl;
-    return;
+    		cout << "[WARNING] Empty queue." << endl;
+    		return;
 	}
 	else
 	{
@@ -85,12 +85,11 @@ void pop(QUEUE &q)
 }
 
 //Ham thong tin cua phan tu dau tien
-elementType top(QUEUE &q) 
-{
-  elementType x;
+elementType top(QUEUE &q) {
+	elementType x;
 	if (isEmpty(q) == true)
 	{
-    cout << "[WARNING] Empty queue." << endl;
+    		cout << "[WARNING] Empty queue." << endl;
 		return x;
 	}
 	x = q.pHead->data; 
@@ -103,7 +102,7 @@ void printQueue(QUEUE q)
 	{
 		elementType x = top(q);
 		cout << x << " ";
-    pop(q);
+		pop(q);
 	}
 }
 
@@ -121,26 +120,22 @@ void inputQueue(QUEUE &q)
 
 		cout << "\nEnter your choice: ";
 		cin >> choice;
-    cin.ignore();
-		if (choice == 1)
-		{
+		cin.ignore();
+		if (choice == 1){
 			elementType x;
 			cout << "\nType in one element to push: ";
 			// cin >> x;
-      getline(cin, x, '\n');
+			getline(cin, x, '\n');
 			NODE *p = getNode(x);
 			push(q, p);
 		}
-		else if (choice == 2)
-		{
+		else if (choice == 2){
 			printQueue(q);
 		}
-		else if (choice == 3)
-		{
+		else if (choice == 3){
 			cout << endl <<"Data of the top of queue: " << top(q);
 		}
-		else
-		{
+		else{
 			break;
 		}
 	}
