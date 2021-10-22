@@ -98,7 +98,7 @@ int main(){
     fileIn.open("input.txt", ios_base::in);
 
     if(!fileIn){
-        cout << "Khong tim thay tep tin" << endl;
+        cout << "[ERROR] CANNOT FIND THE FILE" << endl;
         exit(0);
     };
     string str;
@@ -120,7 +120,7 @@ int main(){
     }
 
     if(!isEmpty(q)){
-    cout << "In cac noi dung con lai trong hang doi...." << endl;
+    cout << endl << "PRINTING REMAINING ELEMENTS IN QUEUE...." << endl;
         while(!isEmpty(q)){
             elementType str3 = q.elements[q.front];
             cout << str3 << endl;
