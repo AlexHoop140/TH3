@@ -22,14 +22,11 @@ bool isEmpty(Queue q){
 }
 
 bool isFull(Queue q){
-    // return ((q.rear - q.front + 1) % 10) == 0;
-    return (q.rear - q.front + 1) == 10;
+    return (q.rear - q.front + 1) == MaxLength;
 }
 
 void dequeue(Queue &q){
     if(!isEmpty(q)){
-        // if(q.front == q.rear) init(q);
-        // else q.front = (q.front + 1) % MaxLength;
         q.front = q.front + 1;
         if(q.front > q.rear) init(q);
     }
@@ -41,10 +38,7 @@ void enqueue(elementType row, Queue &q){
     if(!isFull(q)){
         if(isEmpty(q)) 
             q.front = 0;
-        // q.rear = (q.rear + 1) % MaxLength;
-        // q.rear++;
-        // q.elements[q.rear] = row;
-        if(q.rear == 10 - 1){
+        if(q.rear == (10 - 1)){
             for(int i = q.front; i <= q.rear; i++)
                 q.elements[i-q.front] = q.elements[i];
         
@@ -115,24 +109,24 @@ int main(){
         else{
             cout << "In tu hang......" << endl;
             while(!isEmpty(q)){
-                // elementType str2 = q.elements[q.front];
                 cout << q.elements[q.front] << endl;
                 dequeue(q);
             }
+            // Neu queue full thi in ra het queue, sau do enqueue line moi vao 
             enqueue(str, q);
         }
 
         // enqueue(str, q);
     }
 
-    // if(!isEmpty(q)){
-        cout << "In cac noi dung con lai trong hang doi...." << endl;
+    if(!isEmpty(q)){
+    cout << "In cac noi dung con lai trong hang doi...." << endl;
         while(!isEmpty(q)){
             elementType str3 = q.elements[q.front];
             cout << str3 << endl;
             dequeue(q);
         }
-    // }
+    }
     fileIn.close();
 
 }
