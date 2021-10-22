@@ -107,7 +107,7 @@ int main(){
             enqueue(str, q);
         }
         else{
-            cout << "In tu hang......" << endl;
+            cout << endl << "PRINTING ......" << endl;
             while(!isEmpty(q)){
                 cout << q.elements[q.front] << endl;
                 dequeue(q);
