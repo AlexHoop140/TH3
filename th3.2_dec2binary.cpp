@@ -3,7 +3,7 @@
 using namespace std;
 
 int main(){
-    int n = 123;
+    int n = 1234;
     int x;
     STACK s;
     initStack(s);
